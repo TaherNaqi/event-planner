@@ -12,8 +12,8 @@ router.get("/", fetchList);
 router.post("/", createEvent);
 
 router.delete("/:eventId", deleteEvent);
-// router.get("/:eventId", fetchEvent);
-router.get("/:name", searchByName);
+router.get("/:eventId", fetchEvent);
+// router.get("/:name", searchByName); this is not fully functional
 router.put("/:eventId", updateEvent);
 
 module.exports = router;
