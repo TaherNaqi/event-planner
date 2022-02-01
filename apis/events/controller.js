@@ -53,8 +53,21 @@ exports.updateEvent = async (req, res) => {
 exports.searchByName = async (req, res) => {
   try {
     const { query } = req.params;
-    foundEvents = await Event.find({}).filter((e) => e.name == query);
+    let foundEvents = await Event.find({
+      name: new RegExp("^" + query + "$", "i"),
+    });
     res.status(200).json(foundEvents);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.fullyBooked = async (req, res) => {
+  try {
+    const foundEvents = await Event.find({
+      $expr: { $eq: ["$numberOfSeats", "$bookedSeats"] },
+    });
+    if (foundEvents) res.status(200).json(foundEvents);
+    else res.status(404).json({ message: "not found" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -7,13 +7,14 @@ const {
   fetchEvent,
   updateEvent,
   searchByName,
+  fullyBooked,
 } = require("./controller");
+router.get("/fullybooked", fullyBooked);
+router.get("/names/:query", searchByName);
+router.get("/:eventId", fetchEvent);
 router.get("/", fetchList);
 router.post("/", createEvent);
-
 router.delete("/:eventId", deleteEvent);
-router.get("/:eventId", fetchEvent);
-// router.get("/:name", searchByName); this is not fully functional
 router.put("/:eventId", updateEvent);
 
 module.exports = router;

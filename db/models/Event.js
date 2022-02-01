@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const EventSchema = new mongoose.Schema({
-  organizer: { type: String, maxlength: 20, unique: true },
+  organizer: { type: String, maxlength: 20, required: true, unique: true },
   name: {
     type: String,
     required: true,
@@ -29,12 +29,12 @@ const EventSchema = new mongoose.Schema({
       },
     ],
   },
-  startDate: { type: Date, default: Date.now() + 1 },
+  startDate: { type: Date, min: Date.now() + 1 },
   endDate: {
     type: Date,
     validate: [
       function (value) {
-        return this.startDate < value;
+        return this.startDate <= value;
       },
     ],
   },
